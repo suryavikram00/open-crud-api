@@ -1,0 +1,13 @@
+package com.api.open.crud.api.exception;
+
+import com.api.open.read.api.exception.OpenReadApiException;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+public class OpenCrudApiException extends OpenReadApiException {
+	private static final long serialVersionUID = 1L;
+
+    public OpenCrudApiException(String message) {
+        super(message);
+    }
+}
