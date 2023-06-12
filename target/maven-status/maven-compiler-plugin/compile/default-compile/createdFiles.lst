@@ -1,1 +1,10 @@
-.netbeans_automatic_build
+com\api\open\crud\api\service\OpenCrudService.class
+com\crud\api\generic\filter\OpenCrudRequestResponseLoggingFilter.class
+com\api\open\crud\api\controller\IOpenCrudController.class
+com\api\open\crud\api\repository\OpenCrudRepository.class
+com\api\open\crud\api\controller\OpenCrudController.class
+com\api\open\crud\api\exception\OpenCrudApiException.class
+com\api\open\crud\api\utility\OpenCrudUtility.class
+com\crud\api\generic\constants\OpenCrudEndPoints.class
+com\api\open\crud\api\exceptionhandler\OpenCrudExceptionHandler.class
+com\api\open\crud\api\service\IOpenCrudService.class
