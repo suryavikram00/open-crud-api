@@ -7,7 +7,13 @@ package com.api.open.crud.api.controller;
 import com.api.open.read.api.controller.IOpenReadController;
 import com.api.open.read.api.entity.BaseEntity;
 import com.api.open.read.api.model.CrudApiResponse;
+import java.util.List;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 /**
@@ -15,10 +21,36 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author NMSLAP570
  * @param <T>
  */
-public interface IOpenCrudController<T extends BaseEntity> extends IOpenReadController<T> {
+public interface IOpenCrudController<T extends BaseEntity>
+//        extends IOpenReadController<T> 
+{
 
     ResponseEntity<CrudApiResponse<T>> updateEntity(@RequestBody T t);
 
     ResponseEntity<CrudApiResponse<T>> createEntity(@RequestBody T t);
+    
+    
+    ResponseEntity<CrudApiResponse<T>> findAll();
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    ResponseEntity<CrudApiResponse<T>> findById(@PathVariable Long id);
+
+    ResponseEntity<CrudApiResponse<T>> findAllByPageable(
+            Boolean isPaged,
+            @SortDefault(sort = "priRole")
+            @PageableDefault(size = 20) final Pageable pageable);
+
+    ResponseEntity<CrudApiResponse<T>> findByFilter(T t,
+            Boolean isPaged,
+            @SortDefault(sort = "id") @PageableDefault(size = 10) Pageable pageable,
+            Boolean matchingAny);
+
+    public void exportData(
+            List<T> list,
+            HttpServletResponse response);
 
 }

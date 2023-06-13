@@ -4,7 +4,7 @@
  */
 package com.api.open.crud.api.controller;
 
-import com.api.open.read.api.controller.OpenReadController;
+import static com.api.open.crud.api.constants.OpenCrudEndPoints.ENDPOINT_OPEN_CRUD_PREFIX;
 import com.api.open.read.api.entity.BaseEntity;
 import com.api.open.read.api.enums.StatusEnum;
 import com.api.open.read.api.model.CrudApiResponse;
@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import static com.crud.api.generic.constants.OpenCrudEndPoints.ENDPOINT_OPEN_CRUD_PREFIX;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import com.api.open.crud.api.service.IOpenCrudService;
+import com.api.open.read.api.controller.OpenReadController;
 
 /**
  *
@@ -37,24 +37,25 @@ import com.api.open.crud.api.service.IOpenCrudService;
 public class OpenCrudController<T extends BaseEntity>
         extends OpenReadController<T>
         implements IOpenCrudController<T> {
-    
+
     @Autowired
-    private IOpenCrudService<T> genericService;
-    
+    private IOpenCrudService<T> openCrudService;
+
     @Override
     @PutMapping
     public ResponseEntity<CrudApiResponse<T>> updateEntity(@Valid @RequestBody T t) {
         CrudApiResponse<T> crudApiResponse = new CrudApiResponse<T>(StatusEnum.SUCCESS).addMessage("Data updated successfully");
-        crudApiResponse.setObject(genericService.updateEntity(t));
-        
+        crudApiResponse.setObject(openCrudService.updateEntity(t));
+
         return new ResponseEntity(crudApiResponse, HttpStatus.OK);
     }
-    
+
     @Override
     @PostMapping
     public ResponseEntity<CrudApiResponse<T>> createEntity(@Valid @RequestBody T t) {
         CrudApiResponse<T> crudApiResponse = new CrudApiResponse<T>(StatusEnum.SUCCESS).addMessage("Data created successfully");
-        crudApiResponse.setObject(genericService.createEntity(t));
+        crudApiResponse.setObject(openCrudService.createEntity(t));
         return new ResponseEntity(crudApiResponse, HttpStatus.OK);
     }
+
 }

@@ -3,8 +3,8 @@ C:\Users\NMSLAP570\Documents\NetBeansProjects\open-crud-api\src\main\java\com\ap
 C:\Users\NMSLAP570\Documents\NetBeansProjects\open-crud-api\src\main\java\com\api\open\crud\api\service\IOpenCrudService.java
 C:\Users\NMSLAP570\Documents\NetBeansProjects\open-crud-api\src\main\java\com\api\open\crud\api\constants\OpenCrudEndPoints.java
 C:\Users\NMSLAP570\Documents\NetBeansProjects\open-crud-api\src\main\java\com\api\open\crud\api\exception\OpenCrudApiException.java
-C:\Users\NMSLAP570\Documents\NetBeansProjects\open-crud-api\src\main\java\com\api\open\crud\api\utility\OpenCrudUtility.java
+C:\Users\NMSLAP570\Documents\NetBeansProjects\open-crud-api\src\main\java\com\api\open\crud\api\utility\OpenCrudApiUtility.java
+C:\Users\NMSLAP570\Documents\NetBeansProjects\open-crud-api\src\main\java\com\api\open\crud\api\repository\OpenCrudApiRepository.java
 C:\Users\NMSLAP570\Documents\NetBeansProjects\open-crud-api\src\main\java\com\api\open\crud\api\exceptionhandler\OpenCrudExceptionHandler.java
 C:\Users\NMSLAP570\Documents\NetBeansProjects\open-crud-api\src\main\java\com\api\open\crud\api\filter\OpenCrudRequestResponseLoggingFilter.java
-C:\Users\NMSLAP570\Documents\NetBeansProjects\open-crud-api\src\main\java\com\api\open\crud\api\repository\OpenCrudRepository.java
 C:\Users\NMSLAP570\Documents\NetBeansProjects\open-crud-api\src\main\java\com\api\open\crud\api\controller\OpenCrudController.java
