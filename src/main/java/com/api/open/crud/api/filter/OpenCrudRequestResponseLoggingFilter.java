@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
  *
  * @author NMSLAP570
  */
-@Slf4j
-@Component
-@Order(1)
+//@Slf4j
+//@Component
+//@Order(1)
 public class OpenCrudRequestResponseLoggingFilter extends OpenReadRequestResponseLoggingFilter {
 }

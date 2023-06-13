@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @param <T>
  */
 public interface IOpenCrudController<T extends BaseEntity>
-//        extends IOpenReadController<T> 
+        extends IOpenReadController<T> 
 {
 
     ResponseEntity<CrudApiResponse<T>> updateEntity(@RequestBody T t);
