@@ -23,8 +23,7 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
  */
 @Slf4j
 @Component
-@Order(2)
-//public class OpenCrudRequestResponseLoggingFilter extends OpenReadRequestResponseLoggingFilter {
+@Order(1)
 public class OpenCrudRequestResponseLoggingFilter extends OncePerRequestFilter {
 
     @Override

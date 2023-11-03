@@ -4,9 +4,8 @@
  */
 package com.api.open.crud.api.service;
 
-import com.api.open.read.api.entity.BaseEntity;
-import com.api.open.read.api.entity.SimplePage;
-import com.api.open.read.api.service.IOpenReadService;
+import com.api.open.crud.api.entity.BaseEntity;
+import com.api.open.crud.api.entity.SimplePage;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 
@@ -15,20 +14,22 @@ import org.springframework.data.domain.Pageable;
  * @author NMSLAP570
  * @param <T>
  */
-public interface IOpenCrudService<T extends BaseEntity>
-//        extends IOpenReadService<BaseEntity> 
-{
+public interface IOpenCrudService<T extends BaseEntity<ID>, ID> {
 
-    T updateEntity(T t);
+    public T findById(ID id);
 
-    T createEntity(T t);
-    
-      List<T> findAll();
+    public T updateEntity(T t);
 
-    public SimplePage<T>  findByValue(T t, final Pageable pageable, Boolean matchingAny);
+    public T createEntity(T t);
+
+    public List<T> findAll();
+
+    public SimplePage<T> findByValue(T t, final Pageable pageable, Boolean matchingAny);
+
+    public SimplePage<T> findByValue(List<T> tList, Pageable pageable, Boolean matchingAny);
 
     public SimplePage<T> findAll(final Pageable pageable);
 
-    T findById(Long id);
+    public List<T> updateEntity(List<T> t);
 
 }
