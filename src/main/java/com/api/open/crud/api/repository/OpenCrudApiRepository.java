@@ -8,13 +8,11 @@ package com.api.open.crud.api.repository;
  *
  * @author NMSLAP570
  */
-import com.api.open.read.api.entity.BaseEntity;
-import com.api.open.read.api.repository.OpenReadApiRepository;
+import com.api.open.crud.api.entity.BaseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
 @Component
-//public interface OpenCrudApiRepository<T extends BaseEntity> extends OpenReadApiRepository<T> {
-public interface OpenCrudApiRepository<T extends BaseEntity> extends JpaRepository<T, Long> {
+public interface OpenCrudApiRepository<T extends BaseEntity, ID> extends JpaRepository<T, ID> {
 
 }
