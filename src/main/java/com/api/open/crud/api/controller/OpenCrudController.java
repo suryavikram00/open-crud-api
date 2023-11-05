@@ -42,6 +42,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -100,6 +101,14 @@ public class OpenCrudController<T extends BaseEntity<ID>, ID>
     }
 
     @Override
+    @DeleteMapping
+    public ResponseEntity<CrudApiResponse<T>> deleteEntity(@RequestBody List<T> list, HttpServletResponse response) {
+        CrudApiResponse<T> crudApiResponse = new CrudApiResponse<T>(StatusEnum.SUCCESS).addMessage("Data Deleted successfully");
+        openCrudService.deleteEntity(list);
+        return new ResponseEntity(crudApiResponse, HttpStatus.OK);
+    }
+
+    @Override
     @PostMapping("/export")
     public void exportData(@RequestBody List<T> list, HttpServletResponse response) {
         try {
@@ -112,7 +121,7 @@ public class OpenCrudController<T extends BaseEntity<ID>, ID>
             writer.println(String.join(",", genericType.newInstance().getTableHeaderNames()));
             for (T eachObject : list) {
                 writer.println(OpenCrudApiUtility.extractFieldValuesWithHeader(eachObject));
-                
+
 //                writer.println(OpenCrudApiUtility.extractFieldValues(eachObject));
             }
         } catch (Exception e) {
@@ -252,7 +261,6 @@ public class OpenCrudController<T extends BaseEntity<ID>, ID>
 //            return new ResponseEntity<>(ncrConfigResponse, HttpStatus.ACCEPTED);
 //        }
 //    }
-
     @GetMapping("/read-file")
     @ResponseBody
     public ResponseEntity<?> readFile(@RequestParam String path) {

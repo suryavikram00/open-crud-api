@@ -34,5 +34,7 @@ public interface IOpenCrudService<T extends BaseEntity<ID>, ID> {
     public SimplePage<T> findAll(final Pageable pageable);
 
     public List<T> updateEntity(List<T> t);
+    
+    public void deleteEntity(List<T> t);
 
 }

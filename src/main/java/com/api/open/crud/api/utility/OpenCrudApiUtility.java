@@ -13,9 +13,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -29,7 +32,8 @@ import org.hibernate.annotations.NaturalId;
  */
 @Slf4j
 public class OpenCrudApiUtility {
-public static <T> String getFieldNames(Class<T> clazz) {
+
+    public static <T> String getFieldNames(Class<T> clazz) {
         List<String> fieldNames = new ArrayList();
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
@@ -260,6 +264,53 @@ public static <T> String getFieldNames(Class<T> clazz) {
     public static boolean hasNaturalIdAnnotation(Field field) {
         NaturalId naturalIdAnnotation = field.getAnnotation(NaturalId.class);
         return naturalIdAnnotation != null;
+    }
+
+    public static <T> void setValueViaReflection(Class<T> clazz,
+            T entityObj, String excelColumnName, String cellValue) {
+        Class<T> entityClass = clazz;
+        try {
+            if (cellValue == null || cellValue.isEmpty()) {
+                return;
+            }
+            String methodName = "set" + capitalize(excelColumnName); //setFccode
+            Field field = entityClass.getDeclaredField(excelColumnName);
+            field.setAccessible(true);
+            Method method = entityClass.getMethod(methodName, field.getType());
+            // if field type is integer and then the value is string then throw exception            
+            if (field.getType().equals(Integer.class)) {
+                method.invoke(entityObj, Integer.valueOf(cellValue));
+            } else if (field.getType().equals(Date.class)) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+                Date date = dateFormat.parse(cellValue);
+                method.invoke(entityObj, date);
+            } else if (field.getType().equals(Boolean.class)) {
+                if (!cellValue.equalsIgnoreCase("true") && !cellValue.equalsIgnoreCase("false")) {
+                    throw new OpenCrudApiException("The accepted value must be either true or false | for column : " + excelColumnName + " | value : " + cellValue);
+                }
+                method.invoke(entityObj, Boolean.valueOf(cellValue));
+            } else {
+                method.invoke(entityObj, cellValue);
+            }
+
+        } catch (NumberFormatException e) {
+            log.info("NumberFormatException while setting value for column : {} | value : {} | exception : {}", excelColumnName, cellValue, e.getMessage());
+            throw new OpenCrudApiException("ColumnName :: " + excelColumnName
+                    + " | value :: " + cellValue + " is not a integer!");
+        } catch (OpenCrudApiException e) {
+            log.info("OpenFileParserException :: {} ", e.getMessage());
+            throw new OpenCrudApiException(e.getMessage());
+        } catch (Exception e) {
+            log.info("Exception while setting value for column : {} | value : {} | exception : {}", excelColumnName, cellValue, e);
+            throw new OpenCrudApiException("Exception while setValueViaReflection!");
+        }
+    }
+
+    private static String capitalize(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        return Character.toUpperCase(str.charAt(0)) + str.substring(1);
     }
 
 }

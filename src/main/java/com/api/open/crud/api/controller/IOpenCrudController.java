@@ -28,6 +28,8 @@ public interface IOpenCrudController<T extends BaseEntity<ID>, ID> {
     public ResponseEntity<CrudApiResponse<T>> createEntity(@RequestBody T t);
 
     public ResponseEntity<CrudApiResponse<T>> findAll();
+    
+    public ResponseEntity<CrudApiResponse<T>> deleteEntity(List<T> list, HttpServletResponse response);
 
     /**
      *
@@ -47,7 +49,7 @@ public interface IOpenCrudController<T extends BaseEntity<ID>, ID> {
             @SortDefault(sort = "id") @PageableDefault(size = 10) Pageable pageable,
             Boolean matchingAny);
 
-    public void exportData(List<T> list, HttpServletResponse response);
+    public void exportData(List<T> list, HttpServletResponse response);        
 
     public void downloadFileFormat(HttpServletResponse response);
 
