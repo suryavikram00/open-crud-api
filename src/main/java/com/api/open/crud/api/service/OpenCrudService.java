@@ -4,15 +4,17 @@
  */
 package com.api.open.crud.api.service;
 
-import com.api.open.crud.api.repository.OpenCrudApiRepository;
 import com.api.open.crud.api.entity.BaseEntity;
+
 import com.api.open.crud.api.entity.SimplePage;
+import com.api.open.crud.api.repository.OpenCrudApiRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
@@ -30,7 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class OpenCrudService<T extends BaseEntity<ID>, ID>
         implements IOpenCrudService<T, ID> {
 
-    @Autowired
+    @Autowired(required = false)    
     protected OpenCrudApiRepository<T, ID> openCrudApiRepository;
 
     @Override
@@ -108,4 +110,3 @@ public class OpenCrudService<T extends BaseEntity<ID>, ID>
         return openCrudApiRepository.save(t);
     }
 }
-

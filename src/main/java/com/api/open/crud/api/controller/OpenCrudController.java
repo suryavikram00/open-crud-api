@@ -5,7 +5,7 @@
 package com.api.open.crud.api.controller;
 
 import static com.api.open.crud.api.constants.OpenCrudEndPoints.ENDPOINT_OPEN_CRUD_PREFIX;
-import com.api.open.crud.api.entity.BaseEntity;
+
 import com.api.open.crud.api.entity.SimplePage;
 import com.api.open.crud.api.exception.enums.StatusEnum;
 import com.api.open.crud.api.exception.model.CrudApiResponse;
@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import com.api.open.crud.api.service.IOpenCrudService;
+
 import com.api.open.crud.api.utility.OpenCrudApiUtility;
+import com.api.open.crud.api.entity.BaseEntity;
+import com.api.open.crud.api.service.IOpenCrudService;
 import java.io.File;
 
 import java.io.PrintWriter;
@@ -60,9 +62,6 @@ public class OpenCrudController<T extends BaseEntity<ID>, ID>
 
     @Autowired
     private IOpenCrudService<T, ID> openCrudService;
-
-//    @Autowired
-//    private INcrFileProcessingService ncrFileProcessingService;
 
     @Override
     @GetMapping

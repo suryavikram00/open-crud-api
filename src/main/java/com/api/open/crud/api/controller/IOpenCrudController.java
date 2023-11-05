@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @param <T>
  */
 public interface IOpenCrudController<T extends BaseEntity<ID>, ID> {
-    
-   public ResponseEntity<CrudApiResponse<T>> updateEntity(@RequestBody T t);
+
+    public ResponseEntity<CrudApiResponse<T>> updateEntity(@RequestBody T t);
 
     public ResponseEntity<CrudApiResponse<T>> createEntity(@RequestBody T t);
 
@@ -52,10 +52,8 @@ public interface IOpenCrudController<T extends BaseEntity<ID>, ID> {
     public void downloadFileFormat(HttpServletResponse response);
 
 //    public ResponseEntity<?> bulkUpload(@RequestParam("file") MultipartFile file);
-
     public ResponseEntity<?> readFile(@RequestParam String path);
 
     public void exportDataByFilter(T t, HttpServletResponse response);
-  
 
 }
