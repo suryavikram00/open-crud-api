@@ -39,6 +39,7 @@ public class OpenCrudService<T extends BaseEntity<ID>, ID>
     protected OpenCrudApiRepository<T, ID> openCrudApiRepository;
     
     @Override
+    @Transactional
     public T findById(ID id) {
         try {
             Optional<T> optional = openCrudApiRepository.findById(id);
@@ -49,11 +50,13 @@ public class OpenCrudService<T extends BaseEntity<ID>, ID>
     }
     
     @Override
+    @Transactional
     public List<T> findAll() {
         return openCrudApiRepository.findAll();
     }
     
     @Override
+    @Transactional
     public SimplePage<T> findByValue(T t, Pageable pageable, Boolean matchingAny) {
         log.info(" In Method :: {} {} ", t);
         ExampleMatcher matcher = null;
@@ -69,7 +72,7 @@ public class OpenCrudService<T extends BaseEntity<ID>, ID>
     }
     
     @Override
-//    @Transactional
+    @Transactional
     public SimplePage<T> findByValue(List<T> tList, Pageable pageable, Boolean matchingAny) {
         log.info("In Method, findByValue method, size :: {}", tList.size());
         
@@ -90,6 +93,7 @@ public class OpenCrudService<T extends BaseEntity<ID>, ID>
     }
     
     @Override
+    @Transactional
     public SimplePage<T> findAll(final Pageable pageable) {
         final Page<T> page = openCrudApiRepository.findAll(pageable);
         return new SimplePage<>(page.getContent(), page.getTotalElements(), pageable);
@@ -102,7 +106,7 @@ public class OpenCrudService<T extends BaseEntity<ID>, ID>
     }
     
     @Override
-//    @Transactional
+    @Transactional
     public synchronized List<T> updateEntity(List<T> t) {
         return openCrudApiRepository.saveAll(t);
     }
