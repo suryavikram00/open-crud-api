@@ -280,6 +280,8 @@ public class OpenCrudApiUtility {
             // if field type is integer and then the value is string then throw exception            
             if (field.getType().equals(Integer.class)) {
                 method.invoke(entityObj, Integer.valueOf(cellValue));
+            } else if (field.getType().equals(Long.class)) {
+                method.invoke(entityObj, Long.valueOf(cellValue));
             } else if (field.getType().equals(Date.class)) {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
                 Date date = dateFormat.parse(cellValue);
