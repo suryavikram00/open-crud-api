@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface IOpenCrudController<T extends BaseEntity<ID>, ID> {
 
     public ResponseEntity<CrudApiResponse<T>> updateEntity(@RequestBody T t);
-
+    
     public ResponseEntity<CrudApiResponse<T>> createEntity(@RequestBody T t);
 
     public ResponseEntity<CrudApiResponse<T>> findAll();

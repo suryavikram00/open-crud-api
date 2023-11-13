@@ -131,3 +131,4 @@ public class OpenCrudService<T extends BaseEntity<ID>, ID>
         openCrudApiRepository.deleteAll(t);
     }
 }
+
