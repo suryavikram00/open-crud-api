@@ -18,6 +18,10 @@ public interface IOpenCrudEntityAttributes {
     @JsonIgnore
     public String updatedByColumn();
     @JsonIgnore
-    public String updatedOnColumn();
+    public String updatedOnColumn();    
+    @JsonIgnore
+    public String createdByColumn();    
+    @JsonIgnore
+    public String createdOnColumn();
     
 }

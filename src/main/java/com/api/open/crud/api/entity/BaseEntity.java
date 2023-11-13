@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,9 +26,10 @@ import org.hibernate.annotations.NaturalId;
  * @author NMSLAP570
  */
 @MappedSuperclass
+//@Entitys
 public abstract class BaseEntity<T> implements Serializable, IOpenCrudEntityAttributes {
 
-    private static final long serialVersionUID = 2L;
+     private static final long serialVersionUID = 2L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

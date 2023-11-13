@@ -5,7 +5,7 @@
 package com.api.open.crud.api.controller;
 
 import static com.api.open.crud.api.constants.OpenCrudEndPoints.ENDPOINT_OPEN_CRUD_PREFIX;
-import com.api.open.crud.api.entity.BaseEntity;
+
 import com.api.open.crud.api.entity.SimplePage;
 import com.api.open.crud.api.exception.enums.StatusEnum;
 import com.api.open.crud.api.exception.model.CrudApiResponse;
@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import com.api.open.crud.api.service.IOpenCrudService;
+
 import com.api.open.crud.api.utility.OpenCrudApiUtility;
+import com.api.open.crud.api.entity.BaseEntity;
+import com.api.open.crud.api.service.IOpenCrudService;
 import java.io.File;
 
 import java.io.PrintWriter;
@@ -40,6 +42,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -60,9 +63,6 @@ public class OpenCrudController<T extends BaseEntity<ID>, ID>
 
     @Autowired
     private IOpenCrudService<T, ID> openCrudService;
-
-//    @Autowired
-//    private INcrFileProcessingService ncrFileProcessingService;
 
     @Override
     @GetMapping
@@ -101,6 +101,14 @@ public class OpenCrudController<T extends BaseEntity<ID>, ID>
     }
 
     @Override
+    @DeleteMapping
+    public ResponseEntity<CrudApiResponse<T>> deleteEntity(@RequestBody List<T> list, HttpServletResponse response) {
+        CrudApiResponse<T> crudApiResponse = new CrudApiResponse<T>(StatusEnum.SUCCESS).addMessage("Data Deleted successfully");
+        openCrudService.deleteEntity(list);
+        return new ResponseEntity(crudApiResponse, HttpStatus.OK);
+    }
+
+    @Override
     @PostMapping("/export")
     public void exportData(@RequestBody List<T> list, HttpServletResponse response) {
         try {
@@ -113,7 +121,7 @@ public class OpenCrudController<T extends BaseEntity<ID>, ID>
             writer.println(String.join(",", genericType.newInstance().getTableHeaderNames()));
             for (T eachObject : list) {
                 writer.println(OpenCrudApiUtility.extractFieldValuesWithHeader(eachObject));
-                
+
 //                writer.println(OpenCrudApiUtility.extractFieldValues(eachObject));
             }
         } catch (Exception e) {
@@ -253,7 +261,6 @@ public class OpenCrudController<T extends BaseEntity<ID>, ID>
 //            return new ResponseEntity<>(ncrConfigResponse, HttpStatus.ACCEPTED);
 //        }
 //    }
-
     @GetMapping("/read-file")
     @ResponseBody
     public ResponseEntity<?> readFile(@RequestParam String path) {
