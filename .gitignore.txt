@@ -1,0 +1,21 @@
+# Spring Boot
+target/
+bin/
+build/
+*.jar
+*.war
+*.ear
+*.class
+
+# Gradle
+.gradle/
+build/
+
+# Maven
+log/
+target/
+*.iml
+*.ipr
+*.iws
+.idea/
+*.class
