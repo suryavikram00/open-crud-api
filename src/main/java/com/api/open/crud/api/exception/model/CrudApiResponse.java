@@ -22,7 +22,7 @@ public class CrudApiResponse<T> {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private LocalDateTime timestamp;
 
-    @JsonProperty("message")
+    @JsonProperty("message")    
     private String message;
 
     @JsonProperty("debug_message")

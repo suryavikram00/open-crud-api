@@ -31,7 +31,15 @@ import java.io.PrintWriter;
 import java.lang.reflect.ParameterizedType;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.ResultSetMetaData;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.engine.spi.SessionImplementor;
+
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -46,6 +54,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+
+//import org.jooq.*;
+import java.util.Map;
+import javax.persistence.EntityManager;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
+//import org.jooq.Field;
 
 /**
  *
@@ -63,6 +78,69 @@ public class OpenCrudController<T extends BaseEntity<ID>, ID>
 
     @Autowired
     private IOpenCrudService<T, ID> openCrudService;
+
+    @Autowired
+    private EntityManager entityManager;
+
+    @PostMapping("/executeNativeQuery")
+    @Override
+    public ResponseEntity<CrudApiResponse<List<Map<String, Object>>>> executeNativeQuery(@RequestBody String nativeQuery) {
+        try {
+
+            // Validate that the query is a SELECT query using jOOQ
+            if (!isSelectQuery(nativeQuery)) {
+                return new ResponseEntity(new CrudApiResponse<>(StatusEnum.FAILURE)
+                        .addMessage("Only SELECT queries are allowed."),
+                        HttpStatus.OK);
+            }
+
+            Session session = entityManager.unwrap(Session.class);
+            SessionImplementor sessionImplementor = (SessionImplementor) session;
+            Connection connection = sessionImplementor.getJdbcConnectionAccess().obtainConnection();
+
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(new SingleConnectionDataSource(connection, true));
+
+            List<Map<String, Object>> resultList = jdbcTemplate.query(
+                    nativeQuery,
+                    (resultSet, rowNum) -> {
+                        ResultSetMetaData metaData = resultSet.getMetaData();
+                        int columnCount = metaData.getColumnCount();
+                        List<String> columnNames = new ArrayList<>();
+                        for (int i = 1; i <= columnCount; i++) {
+                            columnNames.add(metaData.getColumnName(i));
+                        }
+
+                        Map<String, Object> rowMap = new LinkedHashMap<>();
+                        for (int i = 0; i < columnCount; i++) {
+                            rowMap.put(columnNames.get(i), resultSet.getObject(i + 1));
+                        }
+                        return rowMap;
+                    }
+            );
+            CrudApiResponse<Map<String, Object>> crudApiResponse = new CrudApiResponse<>(StatusEnum.SUCCESS);
+            crudApiResponse.setObjectList(resultList);
+            return new ResponseEntity(crudApiResponse, HttpStatus.OK);
+        } catch (Exception e) {
+            // Handle exceptions appropriately
+            return new ResponseEntity(new CrudApiResponse<>(StatusEnum.FAILURE)
+                    .addMessage("Error in executing NativeQuery :: " + e.getMessage())
+                    .addDebugMessage(e),
+                    HttpStatus.OK);
+        }
+    }
+
+    private boolean isSelectQuery(String query) {
+        // Use jOOQ to parse and validate the query type
+        try {
+            // Convert the query to uppercase for case-insensitive comparison
+            String trimmedQuery = query.trim().toUpperCase();
+            return trimmedQuery.startsWith("SELECT ");
+        } catch (Exception e) {
+            // Handle parsing exceptions
+            log.error("Exception in isSelectQuery :: ", e);
+            return false;
+        }
+    }
 
     @Override
     @GetMapping

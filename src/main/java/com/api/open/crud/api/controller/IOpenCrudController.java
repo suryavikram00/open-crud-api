@@ -7,6 +7,7 @@ package com.api.open.crud.api.controller;
 import com.api.open.crud.api.entity.BaseEntity;
 import com.api.open.crud.api.exception.model.CrudApiResponse;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -24,11 +25,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface IOpenCrudController<T extends BaseEntity<ID>, ID> {
 
     public ResponseEntity<CrudApiResponse<T>> updateEntity(@RequestBody T t);
-    
+
     public ResponseEntity<CrudApiResponse<T>> createEntity(@RequestBody T t);
 
     public ResponseEntity<CrudApiResponse<T>> findAll();
-    
+
     public ResponseEntity<CrudApiResponse<T>> deleteEntity(List<T> list, HttpServletResponse response);
 
     /**
@@ -49,7 +50,7 @@ public interface IOpenCrudController<T extends BaseEntity<ID>, ID> {
             @SortDefault(sort = "id") @PageableDefault(size = 10) Pageable pageable,
             Boolean matchingAny);
 
-    public void exportData(List<T> list, HttpServletResponse response);        
+    public void exportData(List<T> list, HttpServletResponse response);
 
     public void downloadFileFormat(HttpServletResponse response);
 
@@ -57,5 +58,7 @@ public interface IOpenCrudController<T extends BaseEntity<ID>, ID> {
     public ResponseEntity<?> readFile(@RequestParam String path);
 
     public void exportDataByFilter(T t, HttpServletResponse response);
+
+    public ResponseEntity<CrudApiResponse<List<Map<String, Object>>>> executeNativeQuery(@RequestBody String nativeQuery);
 
 }
