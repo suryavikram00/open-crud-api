@@ -25,23 +25,13 @@ import org.springframework.http.HttpStatus;
 import com.api.open.crud.api.utility.OpenCrudApiUtility;
 import com.api.open.crud.api.entity.BaseEntity;
 import com.api.open.crud.api.service.IOpenCrudService;
-import java.io.File;
-
-import java.io.PrintWriter;
-import java.lang.reflect.ParameterizedType;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -109,62 +99,6 @@ public class OpenCrudController<T extends BaseEntity<ID>, ID>
     }
 
     @Override
-    @PostMapping("/export")
-    public void exportData(@RequestBody List<T> list, HttpServletResponse response) {
-        try {
-            Class<T> genericType = ((Class) ((ParameterizedType) getClass()
-                    .getGenericSuperclass()).getActualTypeArguments()[0]);
-            response.setContentType("text/csv");
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + genericType.getSimpleName() + ".csv\"");
-            PrintWriter writer = response.getWriter();
-            // we should create a method in open read utility which returns the field not with json ignore
-            writer.println(String.join(",", genericType.newInstance().getTableHeaderNames()));
-            for (T eachObject : list) {
-                writer.println(OpenCrudApiUtility.extractFieldValuesWithHeader(eachObject));
-
-//                writer.println(OpenCrudApiUtility.extractFieldValues(eachObject));
-            }
-        } catch (Exception e) {
-            log.error("Exception in findAll method :: ", e);
-        }
-    }
-
-    @Override
-    @PostMapping("/export-data-by-filter")
-    public void exportDataByFilter(@RequestBody T t, HttpServletResponse response) {
-        try {
-            Class<T> genericType = ((Class) ((ParameterizedType) getClass()
-                    .getGenericSuperclass()).getActualTypeArguments()[0]);
-            response.setContentType("text/csv");
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + genericType.getSimpleName() + ".csv\"");
-            PrintWriter writer = response.getWriter();
-            writer.println(String.join(",", genericType.newInstance().getTableHeaderNames()));
-            List<T> list = openCrudService.findByValue(t, Pageable.unpaged(), Boolean.FALSE).getContent();
-            for (T eachObject : list) {
-                writer.println(OpenCrudApiUtility.extractFieldValuesWithHeader(eachObject));
-//                writer.println(eachObject);
-            }
-        } catch (Exception e) {
-            log.error("Exception in findAll method :: ", e);
-        }
-    }
-
-    @Override
-    @GetMapping("/download-file-format")
-    public void downloadFileFormat(HttpServletResponse response) {
-        try {
-            Class<T> genericType = ((Class) ((ParameterizedType) getClass()
-                    .getGenericSuperclass()).getActualTypeArguments()[0]);
-            response.setContentType("text/csv");
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + genericType.getSimpleName() + ".csv\"");
-            PrintWriter writer = response.getWriter();
-            writer.println(String.join(",", genericType.newInstance().getTableHeaderNames()));
-        } catch (Exception e) {
-            log.error("Exception in findAll method :: ", e);
-        }
-    }
-
-    @Override
     @GetMapping(value = "/{id}")
     public ResponseEntity<CrudApiResponse<T>> findById(@PathVariable ID id) {
         try {
@@ -217,80 +151,4 @@ public class OpenCrudController<T extends BaseEntity<ID>, ID>
         crudApiResponse.setObject(openCrudService.createEntity(t));
         return new ResponseEntity(crudApiResponse, HttpStatus.OK);
     }
-
-//    @PostMapping(value = "/bulk-upload")
-//    @ResponseBody
-//    public ResponseEntity<CrudApiResponse<String>> bulkUpload(@RequestParam("file") MultipartFile file) {
-//        log.info("Zipcode uploaded file name :: {}", file.getOriginalFilename());
-//        try {
-//            // validate the file format
-//            OpenFileValidator<T, ID> openFileValidator = new OpenFileValidator<>(
-//                    new CsvFileParser(file),
-//                    openCrudService,
-//                    ncrFileProcessingService);
-//            // if the below method throws an exception then return
-//            Class<T> genericType = null;
-//            try {
-//                genericType = ((Class) ((ParameterizedType) getClass()
-//                        .getGenericSuperclass()).getActualTypeArguments()[0]);
-//                openFileValidator.isValidFile(genericType);
-//            } catch (OpenFileParserException e) {
-//                log.error("Invalid file :: " + e.getMessage());
-//                CrudApiResponse<String> ncrConfigResponse = new CrudApiResponse<String>(StatusEnum.FAILURE)
-//                        .addMessage(e.getMessage());
-//                return new ResponseEntity<>(ncrConfigResponse, HttpStatus.ACCEPTED);
-//            }
-//
-//            String outputFilePath = openFileValidator.processFile(genericType);
-//
-//            // #halted_for_now output file path is sent to the client from the server
-//            log.info("File processing is complete | output file :: " + outputFilePath);
-//            CrudApiResponse<String> ncrConfigResponse = new CrudApiResponse<String>(StatusEnum.SUCCESS)
-//                    .addMessage("File processing is complete");
-//            ncrConfigResponse.setObject(outputFilePath);
-//            return new ResponseEntity<>(ncrConfigResponse, HttpStatus.ACCEPTED);
-//        } catch (OpenFileParserException e) {
-//            log.info("bulkUpload | OpenFileParserException :: " + e);
-//            CrudApiResponse<String> ncrConfigResponse = new CrudApiResponse<String>(StatusEnum.FAILURE)
-//                    .addMessage(e.getMessage());
-//            return new ResponseEntity<>(ncrConfigResponse, HttpStatus.ACCEPTED);
-//        } catch (Exception e) {
-//            log.info("parseMinMaxConfigData | Exception :: " + e);
-//            CrudApiResponse<String> ncrConfigResponse = new CrudApiResponse<String>(StatusEnum.FAILURE)
-//                    .addMessage(e.getMessage());
-//            return new ResponseEntity<>(ncrConfigResponse, HttpStatus.ACCEPTED);
-//        }
-//    }
-    @GetMapping("/read-file")
-    @ResponseBody
-    public ResponseEntity<?> readFile(@RequestParam String path) {
-        if (!path.contains("config_panel")) {
-            CrudApiResponse<T> ncrConfigResponse = new CrudApiResponse<T>(StatusEnum.FAILURE)
-                    .addMessage("User doesn't have the permissions");
-            return new ResponseEntity<>(ncrConfigResponse, HttpStatus.UNAUTHORIZED);
-        }
-        File file = new File(path);
-        if (file.exists()) {
-            Path filePath = Paths.get(file.getAbsolutePath());
-            Resource resource;
-            try {
-                resource = new UrlResource(filePath.toUri());
-                String contentType = "application/octet-stream";
-                HttpHeaders responseHeaders = new HttpHeaders();
-                responseHeaders.set("Access-Control-Expose-Headers", "Content-Disposition");
-                responseHeaders.set("Content-Disposition", "inline; filename=\"" + resource.getFilename() + "\"");
-                return ResponseEntity.ok()
-                        .contentType(MediaType.parseMediaType(contentType))
-                        .headers(responseHeaders)
-                        .body(resource);
-            } catch (Exception ex) {
-                log.info("getFile | Exception :: " + ex);
-                CrudApiResponse<T> ncrConfigResponse = new CrudApiResponse<T>(StatusEnum.FAILURE)
-                        .addMessage(ex.getMessage());
-                return new ResponseEntity<>(ncrConfigResponse, HttpStatus.ACCEPTED);
-            }
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
 }

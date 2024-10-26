@@ -19,3 +19,4 @@ target/
 *.iws
 .idea/
 *.class
+./open-crud-api.code-workspace

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package com.api.open.crud.api.service.excelutils;
+package com.api.open.crud.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;

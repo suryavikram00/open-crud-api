@@ -4,7 +4,6 @@
  */
 package com.api.open.crud.api.entity;
 
-import com.api.open.crud.api.service.excelutils.IOpenCrudEntityAttributes;
 import com.api.open.crud.api.utility.OpenCrudApiUtility;
 import java.io.Serializable;
 import java.lang.reflect.Field;

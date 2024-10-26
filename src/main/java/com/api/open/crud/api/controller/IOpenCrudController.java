@@ -48,14 +48,4 @@ public interface IOpenCrudController<T extends BaseEntity<ID>, ID> {
             Boolean isPaged,
             @SortDefault(sort = "id") @PageableDefault(size = 10) Pageable pageable,
             Boolean matchingAny);
-
-    public void exportData(List<T> list, HttpServletResponse response);        
-
-    public void downloadFileFormat(HttpServletResponse response);
-
-//    public ResponseEntity<?> bulkUpload(@RequestParam("file") MultipartFile file);
-    public ResponseEntity<?> readFile(@RequestParam String path);
-
-    public void exportDataByFilter(T t, HttpServletResponse response);
-
 }
