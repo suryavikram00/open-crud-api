@@ -14,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,12 +25,13 @@ import org.hibernate.annotations.NaturalId;
  *
  * @author NMSLAP570
  */
-@Entity
+// @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user")
+// @Table(name = "user")
 @Data
-public class UserEntity extends BaseEntity<Long>
+@MappedSuperclass
+public class UserEntityModel extends BaseEntity<Long>
         implements Serializable {
 
     private static final long serialVersionUID = 1L;

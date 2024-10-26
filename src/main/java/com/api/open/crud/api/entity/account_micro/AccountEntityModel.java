@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,12 +16,13 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
 
 
-@Entity
+// @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "account")
+// @Table(name = "account")
 @Data
-public class AccountEntity extends BaseEntity<Long>
+@MappedSuperclass
+public class AccountEntityModel extends BaseEntity<Long>
 implements Serializable {
 
 private static final long serialVersionUID = 1L;

@@ -4,12 +4,12 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.api.open.crud.api.entity.user_micro.UserEntity;
+import com.api.open.crud.api.entity.user_micro.UserEntityModel;
 
 @FeignClient(name = "userClient", url = "${user.client.url}")
 public interface UserFeignClient {
 
   @GetMapping("/user/{id}")
-  UserEntity getData(@PathVariable("id") int id);
+  UserEntityModel getData(@PathVariable("id") int id);
   
 }
