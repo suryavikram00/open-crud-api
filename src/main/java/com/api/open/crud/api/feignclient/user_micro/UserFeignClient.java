@@ -10,6 +10,6 @@ import com.api.open.crud.api.entity.user_micro.UserEntityModel;
 public interface UserFeignClient {
 
   @GetMapping("/user/{id}")
-  UserEntityModel getData(@PathVariable("id") int id);
+  Object getData(@PathVariable("id") int id);
   
 }
