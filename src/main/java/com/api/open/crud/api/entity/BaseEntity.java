@@ -20,20 +20,17 @@ import javax.persistence.MappedSuperclass;
 import lombok.Getter;
 import org.hibernate.annotations.NaturalId;
 
+
 /**
  *
  * @author NMSLAP570
  */
 @MappedSuperclass
-//@Entitys
 public abstract class BaseEntity<T> implements Serializable, IOpenCrudEntityAttributes {
 
-     private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 2L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    private T id;
+    public abstract T getId();
 
     public BaseEntity() {
     }

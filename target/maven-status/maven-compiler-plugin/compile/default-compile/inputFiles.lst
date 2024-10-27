@@ -1,8 +1,6 @@
 /Users/suvikram/Documents/project/open-client/open-crud-api/src/main/java/com/api/open/crud/api/service/IOpenCrudService.java
-/Users/suvikram/Documents/project/open-client/open-crud-api/src/main/java/com/api/open/crud/api/entity/user_micro/UserEntityModel.java
 /Users/suvikram/Documents/project/open-client/open-crud-api/src/main/java/com/api/open/crud/api/exception/model/CrudApiResponseError.java
 /Users/suvikram/Documents/project/open-client/open-crud-api/src/main/java/com/api/open/crud/api/constants/OpenCrudEndPoints.java
-/Users/suvikram/Documents/project/open-client/open-crud-api/src/main/java/com/api/open/crud/api/feignclient/user_micro/UserFeignClient.java
 /Users/suvikram/Documents/project/open-client/open-crud-api/src/main/java/com/api/open/crud/api/exception/model/CrudApiResponseValidationError.java
 /Users/suvikram/Documents/project/open-client/open-crud-api/src/main/java/com/api/open/crud/api/filter/OpenCrudRequestResponseLoggingFilter.java
 /Users/suvikram/Documents/project/open-client/open-crud-api/src/main/java/com/api/open/crud/api/controller/OpenCrudController.java
@@ -11,14 +9,11 @@
 /Users/suvikram/Documents/project/open-client/open-crud-api/src/main/java/com/api/open/crud/api/entity/IOpenCrudEntityAttributes.java
 /Users/suvikram/Documents/project/open-client/open-crud-api/src/main/java/com/api/open/crud/api/service/OpenCrudService.java
 /Users/suvikram/Documents/project/open-client/open-crud-api/src/main/java/com/api/open/crud/api/exception/enums/StatusEnum.java
-/Users/suvikram/Documents/project/open-client/open-crud-api/src/main/java/com/api/open/crud/api/feignclient/OpenFeignClient.java
 /Users/suvikram/Documents/project/open-client/open-crud-api/src/main/java/com/api/open/crud/api/exception/model/CrudApiResponse.java
 /Users/suvikram/Documents/project/open-client/open-crud-api/src/main/java/com/api/open/crud/api/entity/SimplePage.java
 /Users/suvikram/Documents/project/open-client/open-crud-api/src/main/java/com/api/open/crud/api/exception/OpenCrudApiException.java
 /Users/suvikram/Documents/project/open-client/open-crud-api/src/main/java/com/api/open/crud/api/entity/BaseEntity.java
 /Users/suvikram/Documents/project/open-client/open-crud-api/src/main/java/com/api/open/crud/api/exceptionhandler/OpenCrudExceptionHandler.java
-/Users/suvikram/Documents/project/open-client/open-crud-api/src/main/java/com/api/open/crud/api/feignclient/account_micro/AccountFeignClient.java
-/Users/suvikram/Documents/project/open-client/open-crud-api/src/main/java/com/api/open/crud/api/entity/account_micro/AccountEntityModel.java
 /Users/suvikram/Documents/project/open-client/open-crud-api/src/main/java/com/api/open/crud/api/OpenCrudApiApplication.java
 /Users/suvikram/Documents/project/open-client/open-crud-api/src/main/java/com/api/open/crud/api/controller/IOpenCrudController.java
 /Users/suvikram/Documents/project/open-client/open-crud-api/src/main/java/com/api/open/crud/api/repository/IBaseEntityRepository.java

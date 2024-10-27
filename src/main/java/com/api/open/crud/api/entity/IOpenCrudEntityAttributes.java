@@ -12,9 +12,6 @@ import java.util.List;
  * @author NMSLAP570
  */
 public interface IOpenCrudEntityAttributes {
-    
-    @JsonIgnore
-    public List<String> getTableHeaderNames();
     @JsonIgnore
     public String updatedByColumn();
     @JsonIgnore
