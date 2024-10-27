@@ -1,11 +1,11 @@
 com/api/open/crud/api/entity/user_micro/UserEntityModel.class
 com/api/open/crud/api/feignclient/account_micro/AccountFeignClient.class
+com/api/open/crud/api/feignclient/OpenFeignClient.class
 com/api/open/crud/api/service/OpenCrudService.class
 com/api/open/crud/api/filter/OpenCrudRequestResponseLoggingFilter.class
 com/api/open/crud/api/exception/model/CrudApiResponseError.class
 com/api/open/crud/api/entity/BaseEntity.class
 com/api/open/crud/api/controller/IOpenCrudController.class
-com/api/open/crud/api/feignclient/account_micro/AccountDto.class
 com/api/open/crud/api/exceptionhandler/OpenCrudExceptionHandler.class
 com/api/open/crud/api/exception/model/CrudApiResponse.class
 com/api/open/crud/api/OpenCrudApiApplication.class

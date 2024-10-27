@@ -20,8 +20,6 @@ public class CrudApiResponse<T> {
     private StatusEnum status;
 
     @JsonProperty("time_stamp")
-    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
-    // @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime timestamp;
 
     @JsonProperty("message")
