@@ -8,7 +8,7 @@
     </parent>
     <groupId>com.api</groupId>
     <artifactId>open-crud-api</artifactId>
-    <version>3.0.1-SNAPSHOT</version>
+    <version>3.0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
