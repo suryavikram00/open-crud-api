@@ -7,6 +7,7 @@ package com.api.open.crud.api.utility;
 import com.api.open.crud.api.exception.OpenCrudApiException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,8 @@ public class OpenCrudApiUtility {
 
         for (Field field : fields) {
             try {
-                if (field.getName().equalsIgnoreCase("serialVersionUID")) {
+                if (field.getName().equalsIgnoreCase("serialVersionUID") 
+                    || Modifier.isFinal(field.getModifiers())) {
                     continue;
                 }
                 field.setAccessible(true);
