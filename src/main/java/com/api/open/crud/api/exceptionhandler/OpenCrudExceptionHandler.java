@@ -87,7 +87,8 @@ public class OpenCrudExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<CrudApiResponse<String>> genericExceptionHandler(Exception exception, WebRequest request) {
         log.info("Logging The exception {} ", exception);
-        String message = "Something went wrong,Please contact the support team";
+        String message = "Something went wrong, Please contact the support team | " 
+                            + (exception.getLocalizedMessage() != null ? exception.getMessage() : "");
         return buildResponseEntity(new CrudApiResponse<String>(StatusEnum.FAILURE).addMessage(message).addDebugMessage(exception));
     }
 
